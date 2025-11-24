@@ -1,0 +1,6 @@
+<div class="note">
+    <h2>{{ note.title }}</h2>
+    <p>{{ note.content }}</p>
+    <span>{{ note.createdAt| date: 'short' }}</span>
+    <button (click)="handleDelete()">Delete</button>
+</div>
