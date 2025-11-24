@@ -1,6 +1,9 @@
-<div class="note">
+<div class="note-card">
+    <div class="note-actions">
+        <button (click)="handleDelete()" aria-label="Delete Note">Delete</button>
+    </div>
+
     <h2>{{ note.title }}</h2>
     <p>{{ note.content }}</p>
-    <span>{{ note.createdAt| date: 'short' }}</span>
-    <button (click)="handleDelete()">Delete</button>
+    <time>{{ note.createdAt| date: 'short' }}</time>
 </div>

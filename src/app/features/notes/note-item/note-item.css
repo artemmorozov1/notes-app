@@ -1,0 +1,2 @@
+:host { display: block; position: relative; } /* гарантирует контекст позиционирования */
+.note-actions { position: absolute; right: 8px; top: 8px; }

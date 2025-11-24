@@ -1,3 +1,14 @@
-@for (note of notes; track note.id){
-    <app-note-item [note]="note" (deleteNote)="onDelete($event)"></app-note-item>
-}
+<section class="notes-wrap">
+    @if (notes.length === 0) {
+        <div class="empty">
+            There is no notes yet. Create your first note!
+        </div>
+    } 
+    @else {
+        <div class="notes-grid">
+            @for (note of notes; track note.id){
+                <app-note-item [note]="note" (deleteNote)="onDelete($event)"></app-note-item>
+            }
+        </div>
+    }
+</section>

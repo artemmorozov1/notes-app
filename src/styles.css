@@ -1,1 +1,157 @@
-/* You can add global styles to this file, and also import other style files */
+:root{
+  --bg: #121212;
+  --card: #1e1e1e;
+  --card-hover: #242424;
+  --text: #e5e5e5;
+  --subtext: #9b9b9b;
+  --primary: #6aa9ff;
+  --primary-hover: #5a8fe0;
+  --delete: #ff6b6b;
+  --delete-hover: #ff5252;
+  --border: #2b2b2b;
+}
+
+body {
+    background: var(--bg);
+}
+
+/* Layout */
+.app-shell{
+  max-width: 960px;
+  margin: 24px auto;
+  padding: 0 16px;
+  display: grid;
+  gap: 20px;
+  color: var(--text);
+  background: var(--bg);
+  font-family: system-ui, sans-serif;
+}
+
+/* Add card */
+.add-card{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  transition: background .2s ease, box-shadow .2s ease;
+}
+.add-card:hover{
+  background: var(--card-hover);
+  box-shadow: 0 6px 26px rgba(0,0,0,0.45);
+}
+
+.add-card input,
+.add-card textarea{
+  border: 1px solid var(--border);
+  background: #161616;
+  color: var(--text);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.add-card input:focus,
+.add-card textarea:focus{
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(106,169,255,0.25);
+  outline: none;
+}
+
+.add-card button{
+  align-self: flex-end;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 500;
+  transition: background .2s ease, transform .15s ease;
+}
+
+.add-card button:hover:not(:disabled){
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.add-card button:disabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Empty notes */
+.notes-wrap .empty{
+  padding: 26px;
+  text-align: center;
+  color: var(--subtext);
+  border: 1px dashed var(--subtext);
+  border-radius: 10px;
+  background: #181818;
+}
+
+/* Notes grid */
+.notes-grid{
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+/* Note card */
+.note-card{
+  position: relative;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.note-card:hover{
+  background: var(--card-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.45);
+}
+
+/* Note actions */
+.note-actions{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.note-actions button{
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--delete);
+  font-size: 13px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  transition: background .2s ease, color .2s ease, transform .15s ease;
+}
+
+.note-actions button:hover{
+  background: rgba(255,90,90,0.12);
+  color: var(--delete-hover);
+  transform: scale(1.12);
+}
+
+/* Content */
+.note-content{
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  color: var(--text);
+}
+
+/* Mobile */
+@media (max-width: 520px){
+  .app-shell{ padding: 0 10px; }
+  .notes-grid{ grid-template-columns: 1fr; }
+}
