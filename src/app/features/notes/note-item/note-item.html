@@ -1,9 +1,23 @@
 <div class="note-card">
-    <div class="note-actions">
-        <button (click)="handleDelete()" aria-label="Delete Note">Delete</button>
-    </div>
+    @if (isEditing) {
+        <div class="note-edit-actions">
+            <button class="primary-btn" (click)="handleSave()" [disabled]="!canSave" aria-label="Save Note">Save</button>
+            <button class="danger-btn" (click)="handleCancel()" aria-label="Cancel Edit">Cancel</button>
+        </div>
 
-    <h2>{{ note.title }}</h2>
-    <p>{{ note.content }}</p>
-    <time>{{ note.createdAt| date: 'short' }}</time>
+        <form [formGroup]="form" class="note-edit-form">
+            <input type="text" placeholder="Title" name="title" formControlName="title">
+            <textarea rows="5" placeholder="Content" name="content" formControlName="content"></textarea>
+        </form>
+
+    } @else {
+        <div class="note-actions">
+            <button class="primary-btn" (click)="handleEdit()" aria-label="Edit Note">Edit</button>
+            <button class="danger-btn" (click)="handleDelete()" aria-label="Delete Note">Delete</button>
+        </div>
+
+        <h2>{{ note.title }}</h2>
+        <p>{{ note.content }}</p>
+        <time>{{ note.createdAt| date: 'short' }}</time>
+    }
 </div>

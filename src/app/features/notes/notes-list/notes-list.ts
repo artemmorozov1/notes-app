@@ -19,4 +19,8 @@ export class NotesList {
   onDelete(id: number) {
     this.notesService.delete(id);
   }
+
+  onSave(note: { id: number, title: string, content: string }){
+    this.notesService.update(note.id, note.title, note.content);
+  }
 }

@@ -7,7 +7,7 @@
     @else {
         <div class="notes-grid">
             @for (note of notes; track note.id){
-                <app-note-item [note]="note" (deleteNote)="onDelete($event)"></app-note-item>
+                <app-note-item [note]="note" (deleteNote)="onDelete($event)" (saveNote)="onSave($event)"></app-note-item>
             }
         </div>
     }
