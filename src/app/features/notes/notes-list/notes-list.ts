@@ -1,18 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { NotesService } from '../../../core/services/notes.service';
 import { NoteItem } from '../note-item/note-item';
+import { NotesFilters } from '../notes-filters/notes-filters';
 
 @Component({
   selector: 'app-notes-list',
   standalone: true,
-  imports: [NoteItem],
+  imports: [NoteItem, NotesFilters],
   templateUrl: './notes-list.html',
   styleUrl: './notes-list.css',
 })
 export class NotesList {
   notesService = inject(NotesService);
   
-  get notes(){
+  get allNotes(){
     return this.notesService.getAll();
   }
 
@@ -22,5 +23,30 @@ export class NotesList {
 
   onSave(note: { id: number, title: string, content: string }){
     this.notesService.update(note.id, note.title, note.content);
+  }
+
+  currentFilter: string = '';
+
+  onFilterChange(filter: string){
+    if (filter !== this.currentFilter){
+      this.currentFilter = filter;
+    }
+  }
+
+  get filteredNotes(){
+    const filter = this.currentFilter.trim().toLowerCase();
+
+    if (filter === '') {
+      return this.allNotes;
+    };
+
+    const filtered = this.allNotes.filter(note => {
+      const title = note.title.toLowerCase();
+      const content = note.content.toLowerCase();
+
+      return title.includes(filter) || content.includes(filter);
+    });
+    
+    return filtered;
   }
 }

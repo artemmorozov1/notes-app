@@ -1,5 +1,4 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { AddNote } from './features/notes/add-note/add-note';
 import { NotesList } from './features/notes/notes-list/notes-list';
 
@@ -10,5 +9,5 @@ import { NotesList } from './features/notes/notes-list/notes-list';
   styleUrl: './app.css'
 })
 export class App {
-  
+    
 }

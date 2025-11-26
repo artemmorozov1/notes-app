@@ -1,12 +1,15 @@
+<section>
+    <app-notes-filters (filterChange)="onFilterChange($event)"></app-notes-filters>
+</section>
 <section class="notes-wrap">
-    @if (notes.length === 0) {
+    @if (allNotes.length === 0) {
         <div class="empty">
             There is no notes yet. Create your first note!
         </div>
     } 
     @else {
         <div class="notes-grid">
-            @for (note of notes; track note.id){
+            @for (note of filteredNotes; track note.id){
                 <app-note-item [note]="note" (deleteNote)="onDelete($event)" (saveNote)="onSave($event)"></app-note-item>
             }
         </div>
