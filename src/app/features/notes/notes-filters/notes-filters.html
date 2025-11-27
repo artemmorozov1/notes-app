@@ -1,3 +1,7 @@
-<div class="filter-wrapper">
-  <input placeholder="Search notes..." [formControl]="filterControl"/>
+<div class="filters-row">
+  <input placeholder="Search notes..." [formControl]="filterControl" />
+  <select [formControl]="sortControl">
+    <option value="date">Sort by Date</option>
+    <option value="title">Sort by Title</option>
+  </select>
 </div>

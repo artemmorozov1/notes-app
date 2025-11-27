@@ -1,5 +1,5 @@
 <section>
-    <app-notes-filters (filterChange)="onFilterChange($event)"></app-notes-filters>
+    <app-notes-filters (filterChange)="onFilterChange($event)" (sortChange)="onSortChange($event)"></app-notes-filters>
 </section>
 <section class="notes-wrap">
     @if (allNotes.length === 0) {
@@ -9,7 +9,7 @@
     } 
     @else {
         <div class="notes-grid">
-            @for (note of filteredNotes; track note.id){
+            @for (note of sortedNotes; track note.id){
                 <app-note-item [note]="note" (deleteNote)="onDelete($event)" (saveNote)="onSave($event)"></app-note-item>
             }
         </div>

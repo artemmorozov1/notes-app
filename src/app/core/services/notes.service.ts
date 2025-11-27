@@ -59,7 +59,6 @@ export class NotesService {
 
   loadFromLocalStorage(): void {
     const notesData = localStorage.getItem('notes');
-    // There i convert string dates back to Date objects
     if (notesData) {
       const parsedNotes = JSON.parse(notesData);
       this.notes = parsedNotes.map((note: Note) => ({

@@ -38,7 +38,7 @@ export class NotesList {
 
     if (filter === '') {
       return this.allNotes;
-    };
+    }
 
     const filtered = this.allNotes.filter(note => {
       const title = note.title.toLowerCase();
@@ -48,5 +48,27 @@ export class NotesList {
     });
     
     return filtered;
+  }
+
+  currentSort: string = 'date';
+
+  onSortChange(sortBy: string){
+    this.currentSort = sortBy;
+  }
+
+  get sortedNotes(){
+    const sorted = [...this.filteredNotes];
+
+    if (this.currentSort === 'date'){
+      sorted.sort((a, b) => {
+        return b.createdAt.getTime() - a.createdAt.getTime();
+      });
+    } else if (this.currentSort === 'title'){
+      sorted.sort((a, b) => {
+        return a.title.localeCompare(b.title);
+      });
+    }
+
+    return sorted;
   }
 }
