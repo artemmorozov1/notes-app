@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { NotesService } from '../../../core/services/notes.service';
 import { NoteItem } from '../note-item/note-item';
 import { NotesFilters } from '../notes-filters/notes-filters';
@@ -12,10 +12,25 @@ import { Note } from '../../../core/interfaces/note.interface';
   styleUrl: './notes-list.css',
 })
 export class NotesList {
-  notesService = inject(NotesService);
+  private readonly notesService = inject(NotesService);
   
   get allNotes(){
-    return this.notesService.getAll();
+    return this.notesService.notes();
+  }
+
+  readonly filter = signal<string>('');
+  readonly sortBy = signal<string>('date');
+
+  onSortChange(sortBy: string){
+    this.sortBy.set(sortBy);
+  }
+
+  onFilterChange(filter: string){
+    this.filter.set(filter);
+  }
+
+  onPinChange(id: number){
+    this.notesService.changePinStatus(id);
   }
 
   onDelete(id: number) {
@@ -26,22 +41,15 @@ export class NotesList {
     this.notesService.update(note.id, note.title, note.content);
   }
 
-  currentFilter: string = '';
+  readonly filteredNotes = computed<Note[]>(() => {
+    const filter = this.filter().trim().toLowerCase();
+    const notes = this.allNotes;
 
-  onFilterChange(filter: string){
-    if (filter !== this.currentFilter){
-      this.currentFilter = filter;
-    }
-  }
-
-  get filteredNotes(){
-    const filter = this.currentFilter.trim().toLowerCase();
-
-    if (filter === '') {
-      return this.allNotes;
+    if (!filter) {
+      return notes;
     }
 
-    const filtered = this.allNotes.filter(note => {
+    const filtered = notes.filter(note => {
       const title = note.title.toLowerCase();
       const content = note.content.toLowerCase();
 
@@ -49,40 +57,27 @@ export class NotesList {
     });
     
     return filtered;
-  }
+  });
 
-  currentSort: string = 'date';
+  readonly sortedNotes = computed<Note[]>(() => {
+    const filtered = this.filteredNotes();
+    const sortMode = this.sortBy();
 
-  onSortChange(sortBy: string){
-    this.currentSort = sortBy;
-  }
-
-  get sortedNotes(){
-    const filtered = this.filteredNotes;
     const pinnedNotes = filtered.filter(note => note.isPinned);
     const unpinnedNotes = filtered.filter(note => !note.isPinned);
 
-
-    const sortNotes = (notes: Note[]) => {
+    const sortNotes = (notes: Note[]) : Note[] => {
       const sorted = [...notes];
 
-      if (this.currentSort === 'date'){
-        sorted.sort((a, b) => {
-          return b.createdAt.getTime() - a.createdAt.getTime();
-        });
-      } else if (this.currentSort === 'title'){
-        sorted.sort((a, b) => {
-          return a.title.localeCompare(b.title);
-        });
+      if (sortMode === 'date') {
+        sorted.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+      } else if (sortMode === 'title') {
+        sorted.sort((a, b) => a.title.localeCompare(b.title));
       }
 
       return sorted;
     }
 
     return [...sortNotes(pinnedNotes), ...sortNotes(unpinnedNotes)];
-  }
-
-  onPinChange(id: number){
-    this.notesService.changePinStatus(id);
-  }
+  });
 }

@@ -1,15 +1,21 @@
 <section>
-    <app-notes-filters (filterChange)="onFilterChange($event)" (sortChange)="onSortChange($event)"></app-notes-filters>
+    <app-notes-filters
+        (filterChange)="onFilterChange($event)"
+        (sortChange)="onSortChange($event)"
+    ></app-notes-filters>
 </section>
 <section class="notes-wrap">
     @if (allNotes.length === 0) {
         <div class="empty">
             There is no notes yet. Create your first note!
         </div>
-    } 
-    @else {
+    } @else if (sortedNotes().length === 0) {
+        <div class="empty">
+            No notes match your search.
+        </div>
+    } @else {
         <div class="notes-grid">
-            @for (note of sortedNotes; track note.id){
+            @for (note of sortedNotes(); track note.id){
                 <app-note-item [note]="note"
                     (deleteNote)="onDelete($event)"
                     (saveNote)="onSave($event)"

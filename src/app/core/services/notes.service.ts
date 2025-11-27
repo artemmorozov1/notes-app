@@ -1,18 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Note } from '../interfaces/note.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotesService {
-  private notes: Note[] = [];
+  private readonly notesState = signal<Note[]>([]);
+  readonly notes = this.notesState.asReadonly();
 
   constructor() {
     this.loadFromLocalStorage();
-  }
-
-  getAll(): Note[] {
-    return this.notes;
   }
 
   add(title: string, content: string): void {
@@ -24,66 +21,65 @@ export class NotesService {
       isPinned: false
     }
 
-    this.notes.push(newNote);
-    console.log(this.notes);
-
+    this.notesState.update(notes => [...notes, newNote]);
     this.saveToLocalStorage();
   }
 
   changePinStatus(id: number): void {
-    const noteIndex = this.notes.findIndex(note => note.id === id);
-
-    if (noteIndex === -1) return;
-
-    const note: Note = this.notes[noteIndex];
-    const editedNote: Note = {
-      ...note,
-      isPinned: !note.isPinned
-    }
-
-    this.notes[noteIndex] = editedNote;
-
+    this.notesState.update(notes => notes.map(note => {
+      if (note.id === id) {
+        return { ...note, isPinned: !note.isPinned };
+      }
+      return note;
+    }));
     this.saveToLocalStorage();
   };
 
   update(id: number, title: string, content: string): void {
-    const noteIndex = this.notes.findIndex(note => note.id === id);
 
-    if (noteIndex === -1) return;
-
-    const note: Note = this.notes[noteIndex];
-    const editedNote: Note = {
-      ...note,
-      title: title,
-      content: content
-    }
-
-    this.notes[noteIndex] = editedNote;
+    this.notesState.update(notes => notes.map(note => {
+      if (note.id === id) {
+        return {
+          ...note,
+          title: title,
+          content: content
+        };
+      }
+      return note;
+    }));
 
     this.saveToLocalStorage();
   }
 
   delete(id: number): void {
-    const newNotes = this.notes.filter(note => note.id !== id);
-    this.notes = newNotes;
-
+    this.notesState.update(notes => notes.filter(note => note.id !== id));
     this.saveToLocalStorage();
   }
 
   saveToLocalStorage(): void {
-    localStorage.setItem('notes', JSON.stringify(this.notes));
+    localStorage.setItem('notes', JSON.stringify(this.notesState()));
   }
 
   loadFromLocalStorage(): void {
     const notesData = localStorage.getItem('notes');
-    if (notesData) {
-      const parsedNotes = JSON.parse(notesData);
-      this.notes = parsedNotes.map((note: Note) => ({
+
+    if (!notesData) {
+      this.notesState.set([]);
+      return;
+    }
+
+    try {
+      const parsedNotes = JSON.parse(notesData) as Note[];
+
+      const restored = parsedNotes.map((note: Note) => ({
         ...note,
         createdAt: new Date(note.createdAt)
       }));
-    } else {
-      this.notes = [];
+
+      this.notesState.set(restored);
+    }
+    catch {
+      this.notesState.set([]);
     }
   }
 }

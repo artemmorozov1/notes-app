@@ -58,7 +58,7 @@ export class NoteItem {
     this.isEditing = false;
   }
 
-  //Pinning logic
+  // Pinning logic
   @Output() pinNote = new EventEmitter<number>();
   handlePin(){
     this.pinNote.emit(this.note.id);
