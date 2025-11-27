@@ -15,6 +15,10 @@ export class AddNote {
     content: new FormControl<string>('')
   });
 
+  get canSubmit(): boolean {
+    return !!this.form.value.title?.trim()?.length;
+  }
+
   notes = inject(NotesService);
 
   handleSubmit(){

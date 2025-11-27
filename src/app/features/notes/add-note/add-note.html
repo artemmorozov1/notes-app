@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="handleSubmit()" class="add-card">
     <input formControlName="title" placeholder="Enter title...">
     <textarea formControlName="content" placeholder="Enter description..."></textarea>
-    <button type="submit" [disabled]="!(form.value.title?.trim)">Submit</button>
+    <button type="submit" [disabled]="!canSubmit">Submit</button>
 </form>
