@@ -43,15 +43,15 @@
 
 .filters-row input:hover,
 .filters-row select:hover {
-  background: var(--card-hover);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  background: #11192a;
+  box-shadow: 0 4px 18px rgba(25, 38, 64, 0.42);
 }
 
 .filters-row input:focus,
 .filters-row select:focus {
   transform: translateY(-1px);
-  background: var(--card-hover);
-  box-shadow: 0 5px 22px rgba(0, 0, 0, 0.45);
+  background: #132034;
+  box-shadow: 0 5px 22px rgba(74, 98, 143, 0.42);
 }
 
 @media (max-width: 600px) {

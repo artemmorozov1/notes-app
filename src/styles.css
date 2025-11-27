@@ -1,24 +1,24 @@
 /* ---------- THEME ---------- */
 :root{
-  --bg: #0e1219;
-  --card: #151a23;
-  --card-hover: #1c2230;
-  --text: #e8edf5;
-  --subtext: #a7b2c4;
-  --primary: #5d74ae;
-  --primary-hover: #4e6396;
-  --delete: #ff7b7b;
-  --delete-hover: #ff5f5f;
-  --border: #222a36;
+  --bg: #05070d;
+  --card: #0c1018;
+  --card-hover: #131a26;
+  --text: #eef3fb;
+  --subtext: #9aa5bd;
+  --primary: #4a628f;
+  --primary-hover: #3d5278;
+  --delete: #d65a68;
+  --delete-hover: #be4a57;
+  --border: #171e2b;
 }
 
 body {
   min-height: 100vh;
   background-color: var(--bg);
   background-image:
-    radial-gradient(180% 160% at 18% 0%, rgba(35, 45, 70, 0.08), transparent 60%),
-    radial-gradient(160% 140% at 86% 0%, rgba(107, 65, 49, 0.04), transparent 60%),
-    linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.18) 100%);
+    radial-gradient(180% 160% at 18% 0%, rgba(25, 36, 60, 0.1), transparent 60%),
+    radial-gradient(160% 140% at 86% 0%, rgba(76, 56, 40, 0.05), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.22) 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
   color: var(--text);
@@ -51,8 +51,8 @@ body {
 
 .add-card:hover{
   background: var(--card-hover);
-  border-color: rgba(255,255,255,0.05);
-  box-shadow: 0 14px 34px rgba(0,0,0,0.46);
+  border-color: rgba(74,98,143,0.16);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.5);
 }
 
 .add-card input,
@@ -60,7 +60,7 @@ body {
   width: 100%;
   box-sizing: border-box;
   border: 1px solid var(--border);
-  background: #111722;
+  background: #0a0f1a;
   color: var(--text);
   padding: 10px;
   border-radius: 8px;
@@ -71,7 +71,7 @@ body {
 .add-card input:focus,
 .add-card textarea:focus{
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(106,169,255,0.25);
+  box-shadow: 0 0 0 3px rgba(74,98,143,0.3);
   outline: none;
 }
 
@@ -81,17 +81,17 @@ body {
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  background: #35456c;
-  color: #e9efff;
+  background: var(--primary);
+  color: #e6ebf6;
   font-weight: 500;
-  box-shadow: 0 6px 16px rgba(53,69,108,0.32);
+  box-shadow: 0 6px 16px rgba(61,82,120,0.32);
   transition: background .2s ease, transform .15s ease, box-shadow .2s ease;
 }
 
 .add-card button:hover:not(:disabled){
-  background: #2f3c60;
+  background: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(47,60,96,0.34);
+  box-shadow: 0 8px 18px rgba(74,98,143,0.42);
 }
 
 .add-card button:disabled{
