@@ -20,7 +20,8 @@ export class NotesService {
       id: Date.now(),
       title: title,
       content: content,
-      createdAt: new Date()
+      createdAt: new Date(),
+      isPinned: false
     }
 
     this.notes.push(newNote);
@@ -28,6 +29,22 @@ export class NotesService {
 
     this.saveToLocalStorage();
   }
+
+  changePinStatus(id: number): void {
+    const noteIndex = this.notes.findIndex(note => note.id === id);
+
+    if (noteIndex === -1) return;
+
+    const note: Note = this.notes[noteIndex];
+    const editedNote: Note = {
+      ...note,
+      isPinned: !note.isPinned
+    }
+
+    this.notes[noteIndex] = editedNote;
+
+    this.saveToLocalStorage();
+  };
 
   update(id: number, title: string, content: string): void {
     const noteIndex = this.notes.findIndex(note => note.id === id);

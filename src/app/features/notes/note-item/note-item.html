@@ -12,6 +12,7 @@
 
     } @else {
         <div class="note-actions">
+            <button class="pin-btn" [class.pinned]="note.isPinned" (click)="handlePin()" aria-label="Pin Note">Pin</button>
             <button class="primary-btn" (click)="handleEdit()" aria-label="Edit Note">Edit</button>
             <button class="danger-btn" (click)="handleDelete()" aria-label="Delete Note">Delete</button>
         </div>

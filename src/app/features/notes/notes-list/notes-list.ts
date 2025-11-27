@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { NotesService } from '../../../core/services/notes.service';
 import { NoteItem } from '../note-item/note-item';
 import { NotesFilters } from '../notes-filters/notes-filters';
+import { Note } from '../../../core/interfaces/note.interface';
 
 @Component({
   selector: 'app-notes-list',
@@ -57,18 +58,31 @@ export class NotesList {
   }
 
   get sortedNotes(){
-    const sorted = [...this.filteredNotes];
+    const filtered = this.filteredNotes;
+    const pinnedNotes = filtered.filter(note => note.isPinned);
+    const unpinnedNotes = filtered.filter(note => !note.isPinned);
 
-    if (this.currentSort === 'date'){
-      sorted.sort((a, b) => {
-        return b.createdAt.getTime() - a.createdAt.getTime();
-      });
-    } else if (this.currentSort === 'title'){
-      sorted.sort((a, b) => {
-        return a.title.localeCompare(b.title);
-      });
+
+    const sortNotes = (notes: Note[]) => {
+      const sorted = [...notes];
+
+      if (this.currentSort === 'date'){
+        sorted.sort((a, b) => {
+          return b.createdAt.getTime() - a.createdAt.getTime();
+        });
+      } else if (this.currentSort === 'title'){
+        sorted.sort((a, b) => {
+          return a.title.localeCompare(b.title);
+        });
+      }
+
+      return sorted;
     }
 
-    return sorted;
+    return [...sortNotes(pinnedNotes), ...sortNotes(unpinnedNotes)];
+  }
+
+  onPinChange(id: number){
+    this.notesService.changePinStatus(id);
   }
 }
