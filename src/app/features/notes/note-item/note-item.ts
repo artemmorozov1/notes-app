@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { Note } from '../../../core/interfaces/note.interface';
 
 @Component({
   selector: 'app-note-item',
   standalone: true,
-  imports: [ReactiveFormsModule, DatePipe],
+  imports: [ReactiveFormsModule, DatePipe, NgClass],
   templateUrl: './note-item.html',
   styleUrl: './note-item.css',
 })

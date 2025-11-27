@@ -1,4 +1,8 @@
-<div class="note-card">
+<div class="note-card" [ngClass]="{'pinned-note': note.isPinned}">
+    @if (note.isPinned) {
+        <span class="pin-indicator">Pinned</span>
+    }
+
     @if (isEditing) {
         <div class="note-edit-actions">
             <button class="primary-btn" (click)="handleSave()" [disabled]="!canSave" aria-label="Save Note">Save</button>
